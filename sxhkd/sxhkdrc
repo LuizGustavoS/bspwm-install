@@ -1,0 +1,93 @@
+# close window
+super + {_,shift + }q
+	bspc node -{c,k}
+
+# alternate between the tiled and monocle layout
+super + m
+	bspc desktop -l next
+
+# focus the node in the given direction
+super + {_,shift + }{Left,Down,Up,Right}
+	bspc node -{f,s} {west,south,north,east}
+
+# focus or send to the given desktop
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}'
+
+# preselect the direction
+super + ctrl + {Left,Down,Up,Right}
+	bspc node -p {west,south,north,east}
+
+# preselect the ratio
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# cancel the preselection for the focused node
+super + ctrl + space
+	bspc node -p cancel
+
+# cancel the preselection for the focused desktop
+super + ctrl + shift + space
+	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+# expand a window by moving one of its side outward
+super + alt + {Left,Down,Up,Right}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# contract a window by moving one of its side inward
+super + alt + shift + {Left,Down,Up,Right}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# move a floating window
+super + {h,j,k,l}
+	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+#-------------------------------------------------------------------
+
+# make sxhkd reload its configuration files:
+super + w
+ 	pkill -USR1 -x sxhkd
+
+# Increase volume
+XF86AudioRaiseVolume
+	amixer set Master 5%+ 1>/dev/null
+
+# Decrease volume
+XF86AudioLowerVolume
+	amixer set Master 5%- 1>/dev/null
+
+# mute volume
+XF86AudioMute
+	amixer -q set Master toggle
+
+# play music
+XF86AudioPlay
+    playerctl play-pause
+
+# next music
+XF86AudioNext
+    playerctl next
+
+# previous music
+XF86AudioPrev
+    playerctl previous
+
+# printscreen
+Print
+	flameshot gui
+
+# lockscreen
+super + l
+	dm-tool lock
+
+#-------------------------------------------------------------------
+
+# program launcher
+super + @space
+	rofi -show drun -show-icons
+
+super + Return
+	alacritty
+
+super + b
+	google-chrome
